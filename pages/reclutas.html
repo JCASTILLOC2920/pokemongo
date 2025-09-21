@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reclutas - Pokémon GO Hub</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+      body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f2f2f2;color:#333;font-size:13px}
+      header{background:#004c99;color:#fff;padding:.5rem;text-align:center;font-weight:bold}
+      .btn{width:100%;border:none;background:#0066cc;color:#fff;padding:.6rem;font-size:14px;text-align:left;cursor:pointer;border-bottom:1px solid #bbb;outline:none}
+      .btn:after{content:'▾';float:right}
+      .btn.active:after{content:'▴'}
+      .panel{max-height:0;overflow:hidden;background:#fff;transition:max-height .3s ease}
+      .scroll{overflow-x:auto}
+      .panel table{min-width:650px;font-size:11px;border-collapse:collapse}
+      .panel th{background:#004c99;color:#fff;padding:.3rem .2rem;text-align:center;font-size:10px}
+      .panel td{padding:.25rem .2rem;border-bottom:1px solid #ddd;white-space:nowrap}
+      .counter{background:#eef;font-size:10px;padding:.2rem}
+      @media (max-width:360px){
+        .btn{font-size:13px;padding:.5rem}
+        .panel table{font-size:10px}
+      }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1 class="main-title">Pokémon GO Hub</h1>
+        </div>
+    </header>
+
+    <nav class="sidenav" id="sidenav">
+        <a href="../index.html" class="nav-item">Índice</a>
+                <a href="pokemon-go-regiones.html" class="nav-item">Busca Pokémon</a>
+        <a href="calculadora.html" class="nav-item">Calculadora PvP IV</a>
+        <a href="kanto.html" class="nav-item">Kanto</a>
+        <a href="Johto.html" class="nav-item">Johto</a>
+        <a href="Hoenn.html" class="nav-item">Hoenn</a>
+        <a href="Sinnoh.html" class="nav-item">Sinnoh</a>
+        <a href="Teselia.html" class="nav-item">Teselia (Unova)</a>
+        <a href="kalos.html" class="nav-item">Kalos</a>
+        <a href="alola.html" class="nav-item">Alola</a>
+        <a href="galar.html" class="nav-item">Galar</a>
+        <a href="paldea.html" class="nav-item">Paldea</a>
+        <a href="reclutas.html" class="nav-item">Reclutas</a>
+        <a href="lideres.html" class="nav-item">Líderes</a>
+        <a href="galeria.html" class="nav-item">Galería</a>
+    </nav>
+
+    <main class="content" id="content">
+        <header>Guía Rocket Pocket</header>
+
+        <!-- 🔹 1. “No eres rival para mi voluntad de hierro” -->
+        <button class="btn">No eres rival para mi voluntad de hierro</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Diglett-A</th><th>Ataque</th><th>Mejor vs Beldum</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Diglett-A (Tierra/Acero) / Beldum (Acero/Psíquico)</td><td>Swampert (Agua/Tierra)</td><td>Hidropulso</td><td>Metagross (Acero/Psíquico)</td><td>Meteogolpe</td></tr>
+              <tr><td>2º</td><td>Lairon (Acero/Roca) / Metang (Acero/Psíquico)</td><td>Kyogre (Agua)</td><td>Surf</td><td>Garchomp (Tierra/Dragón)</td><td>Terratemblor</td></tr>
+              <tr><td>3º</td><td>Sandslash-A (Acero/Hielo) / Aggron (Acero/Roca)</td><td>Lucario (Lucha/Acero)</td><td>Contraataque</td><td>Reshiram (Fuego/Dragón)</td><td>Aliento Dragón</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Fuego, Lucha, Tierra</div>
+        </div>
+
+        <!-- 🔹 2. “Estas aguas son traicioneras” -->
+        <button class="btn">Estas aguas son traicioneras</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Oshawott</th><th>Ataque</th><th>Mejor vs Spheal</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Oshawott (Agua) / Spheal (Agua/Hielo)</td><td>Venusaur (Planta/Veneno)</td><td>Hoja Afilada</td><td>Magnezone (Eléctrico/Acero)</td><td>Chispazo</td></tr>
+              <tr><td>2º</td><td>Dewott (Agua) / Seadra (Agua)</td><td>Roserade (Planta/Veneno)</td><td>Hoja Afilada</td><td>Electivire (Eléctrico)</td><td>Chispazo</td></tr>
+              <tr><td>3º</td><td>Samurott (Agua) / Carracosta (Agua/Roca)</td><td>Sceptile (Planta)</td><td>Hoja Afilada</td><td>Zapdos (Eléctrico/Volador)</td><td>Chispazo</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Eléctrico, Planta</div>
+        </div>
+
+        <!-- 🔹 3. “¡Vamos, mi poderoso Pokémon de tipo Bicho!” -->
+        <button class="btn">¡Vamos, mi poderoso Pokémon de tipo Bicho!</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Scyther</th><th>Ataque</th><th>Mejor vs Pineco</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Scyther (Bicho/Volador) / Pineco (Bicho)</td><td>Heatran (Fuego/Acero)</td><td>Aliento Fuego</td><td>Heatran (Fuego/Acero)</td><td>Aliento Fuego</td></tr>
+              <tr><td>2º</td><td>Anorith (Roca/Bicho) / Shelmet (Bicho)</td><td>Charizard (Fuego/Volador)</td><td>Giro Fuego</td><td>Moltres (Fuego/Volador)</td><td>Aliento Fuego</td></tr>
+              <tr><td>3º</td><td>Scizor (Acero/Bicho) / Forretress (Bicho/Acero)</td><td>Reshiram (Fuego/Dragón)</td><td>Aliento Dragón</td><td>Chandelure (Fantasma/Fuego)</td><td>Ascuas</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Fuego, Volador, Roca</div>
+        </div>
+
+        <!-- 🔹 4. “¡GRRR! ¿Qué te pareció eso?” -->
+        <button class="btn">¡GRRR! ¿Qué te pareció eso?</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Dratini</th><th>Ataque</th><th>Mejor vs Bagon</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Dratini (Dragón) / Bagon (Dragón)</td><td>Garchomp (Tierra/Dragón)</td><td>Aliento Dragón</td><td>Garchomp (Tierra/Dragón)</td><td>Aliento Dragón</td></tr>
+              <tr><td>2º</td><td>Dragonair (Dragón) / Gabite (Tierra/Dragón)</td><td>Weavile (Siniestro/Hielo)</td><td>Garra Umbría</td><td>Mamoswine (Hielo/Tierra)</td><td>Polvo Hielo</td></tr>
+              <tr><td>3º</td><td>Dragonite (Dragón/Volador) / Salamence (Dragón/Volador)</td><td>Glaceon (Hielo)</td><td>Aliento Hielo</td><td>Kyurem (Hielo/Dragón)</td><td>Aliento Hielo</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Hielo, Dragón, Hada</div>
+        </div>
+
+        <!-- 🔹 5. “¡Prepárate para alucinar!” -->
+        <button class="btn">¡Prepárate para alucinar!</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Mareep</th><th>Ataque</th><th>Mejor vs Joltik</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Mareep (Eléctrico) / Joltik (Bicho/Eléctrico)</td><td>Garchomp (Tierra/Dragón)</td><td>Terratemblor</td><td>Garchomp (Tierra/Dragón)</td><td>Terratemblor</td></tr>
+              <tr><td>2º</td><td>Geodude-A (Eléctrico/Roca) / Voltorb (Eléctrico)</td><td>Groudon (Tierra)</td><td>Terratemblor</td><td>Groudon (Tierra)</td><td>Terratemblor</td></tr>
+              <tr><td>3º</td><td>Galvantula (Bicho/Eléctrico) / Luxray (Eléctrico)</td><td>Rhyperior (Tierra/Roca)</td><td>Terratemblor</td><td>Hippowdon (Tierra)</td><td>Terratemblor</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Tierra</div>
+        </div>
+
+        <!-- 🔹 6. “Ja, ja, ja...” -->
+        <button class="btn">Ja, ja, ja...</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Duskull</th><th>Ataque</th><th>Mejor vs Gastly</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Duskull (Fantasma) / Gastly (Fantasma/Veneno)</td><td>Darkrai (Siniestro)</td><td>Mordida</td><td>Gengar (Fantasma/Veneno)</td><td>Mordida</td></tr>
+              <tr><td>2º</td><td>Dusclops (Fantasma) / Sableye (Fantasma/Siniestro)</td><td>Tyranitar (Roca/Siniestro)</td><td>Mordida</td><td>Chandelure (Fantasma/Fuego)</td><td>Ascuas</td></tr>
+              <tr><td>3º</td><td>Gengar (Fantasma/Veneno) / Froslass (Hielo/Fantasma)</td><td>Hydreigon (Siniestro/Dragón)</td><td>Mordida</td><td>Weavile (Siniestro/Hielo)</td><td>Mordida</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Fantasma, Siniestro</div>
+        </div>
+
+        <!-- 🔹 7. “¿Sabes lo caliente que puede llegar a ser el aliento de fuego?” -->
+        <button class="btn">¿Sabes lo caliente que puede llegar a ser…?</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Tepig</th><th>Ataque</th><th>Mejor vs Darumaka</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Tepig (Fuego) / Darumaka (Fuego)</td><td>Kyogre (Agua)</td><td>Surf</td><td>Kyogre (Agua)</td><td>Surf</td></tr>
+              <tr><td>2º</td><td>Pignite (Fuego/Lucha) / Houndoom (Fuego/Siniestro)</td><td>Swampert (Agua/Tierra)</td><td>Hidropulso</td><td>Swampert (Agua/Tierra)</td><td>Hidropulso</td></tr>
+              <tr><td>3º</td><td>Emboar (Fuego/Lucha) / Darmanitan (Fuego)</td><td>Kingler (Agua)</td><td>Burbuja</td><td>Kingler (Agua)</td><td>Burbuja</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Agua, Roca, Tierra</div>
+        </div>
+
+        <!-- 🔹 8. “¡Mira a mi Pokémon tan mono!” -->
+        <button class="btn">¡Mira a mi Pokémon tan mono!</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Mawile</th><th>Ataque</th><th>Mejor vs Snubbull</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Mawile (Acero/Hada) / Snubbull (Hada)</td><td>Reshiram (Fuego/Dragón)</td><td>Aliento Dragón</td><td>Metagross (Acero/Psíquico)</td><td>Meteogolpe</td></tr>
+              <tr><td>2º</td><td>— / Weezing-G (Veneno/Hada)</td><td>Charizard (Fuego/Volador)</td><td>Giro Fuego</td><td>Lucario (Lucha/Acero)</td><td>Contraataque</td></tr>
+              <tr><td>3º</td><td>— / —</td><td>Chandelure (Fantasma/Fuego)</td><td>Ascuas</td><td>Dialga (Acero/Dragón)</td><td>Aliento Dragón</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Veneno, Acero</div>
+        </div>
+
+        <!-- 🔹 9. “El frío puede paralizarte, ¿no lo sabes?” -->
+        <button class="btn">El frío puede paralizarte…</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Piloswine</th><th>Ataque</th><th>Mejor vs Amaura</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Piloswine (Hielo/Tierra) / Amaura (Hielo/Roca)</td><td>Reshiram (Fuego/Dragón)</td><td>Aliento Dragón</td><td>Reshiram (Fuego/Dragón)</td><td>Aliento Dragón</td></tr>
+              <tr><td>2º</td><td>Froslass (Hielo/Fantasma) / Ninetales-A (Hielo/Hada)</td><td>Charizard (Fuego/Volador)</td><td>Giro Fuego</td><td>Charizard (Fuego/Volador)</td><td>Giro Fuego</td></tr>
+              <tr><td>3º</td><td>Glalie (Hielo) / Aurorus (Hielo/Roca)</td><td>Chandelure (Fantasma/Fuego)</td><td>Ascuas</td><td>Chandelure (Fantasma/Fuego)</td><td>Ascuas</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Fuego, Lucha, Roca</div>
+        </div>
+
+        <!-- 🔹 10. “Estos músculos no son solo para impresionar” -->
+        <button class="btn">Estos músculos no son solo para impresionar</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Machop</th><th>Ataque</th><th>Mejor vs Mankey</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Machop (Lucha) / Mankey (Lucha)</td><td>Mewtwo (Psíquico)</td><td>Confusión</td><td>Mewtwo (Psíquico)</td><td>Confusión</td></tr>
+              <tr><td>2º</td><td>Gurdurr (Lucha) / Hitmonchan (Lucha)</td><td>Lugia (Psíquico/Volador)</td><td>Dragón Ala</td><td>Lugia (Psíquico/Volador)</td><td>Dragón Ala</td></tr>
+              <tr><td>3º</td><td>Toxicroak (Veneno/Lucha) / Infernape (Fuego/Lucha)</td><td>Hoopa (Psíquico/Fantasma)</td><td>Confusión</td><td>Hoopa (Psíquico/Fantasma)</td><td>Confusión</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Volador, Psíquico, Hada</div>
+        </div>
+
+        <!-- 🔹 11. “Normal no significa débil” -->
+        <button class="btn">Normal no significa débil</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Bunnelby</th><th>Ataque</th><th>Mejor vs Bidoof</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Bunnelby (Normal) / Bidoof (Normal)</td><td>Machamp (Lucha)</td><td>Contraataque</td><td>Machamp (Lucha)</td><td>Contraataque</td></tr>
+              <tr><td>2º</td><td>Diggersby (Normal/Tierra) / Raticate (Normal)</td><td>Lucario (Lucha/Acero)</td><td>Contraataque</td><td>Lucario (Lucha/Acero)</td><td>Contraataque</td></tr>
+              <tr><td>3º</td><td>Ursaring (Normal) / Slaking (Normal)</td><td>Conkeldurr (Lucha)</td><td>Contraataque</td><td>Conkeldurr (Lucha)</td><td>Contraataque</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Lucha</div>
+        </div>
+
+        <!-- 🔹 12. “¡No nos vaciles!” -->
+        <button class="btn">¡No nos vaciles!</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Snivy</th><th>Ataque</th><th>Mejor vs Hoppip</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Snivy (Planta) / Hoppip (Planta/Volador)</td><td>Reshiram (Fuego/Dragón)</td><td>Aliento Dragón</td><td>Reshiram (Fuego/Dragón)</td><td>Aliento Dragón</td></tr>
+              <tr><td>2º</td><td>Lileep (Roca/Planta) / Servine (Planta)</td><td>Charizard (Fuego/Volador)</td><td>Giro Fuego</td><td>Charizard (Fuego/Volador)</td><td>Giro Fuego</td></tr>
+              <tr><td>3º</td><td>Serperior (Planta) / Vileplume (Planta/Veneno)</td><td>Chandelure (Fantasma/Fuego)</td><td>Ascuas</td><td>Chandelure (Fantasma/Fuego)</td><td>Ascuas</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Fuego, Hielo, Veneno, Volador, Bicho</div>
+        </div>
+
+        <!-- 🔹 13. “¿Te asustan los psíquicos que usan un poder invisible?” -->
+        <button class="btn">¿Te asustan los psíquicos…?</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Inkay</th><th>Ataque</th><th>Mejor vs Ralts</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Inkay (Siniestro/Psíquico) / Ralts (Psíquico/Hada)</td><td>Darkrai (Siniestro)</td><td>Mordida</td><td>Gengar (Fantasma/Veneno)</td><td>Mordida</td></tr>
+              <tr><td>2º</td><td>Wobbuffet (Psíquico) / Duosion (Psíquico)</td><td>Tyranitar (Roca/Siniestro)</td><td>Mordida</td><td>Chandelure (Fantasma/Fuego)</td><td>Ascuas</td></tr>
+              <tr><td>3º</td><td>Gallade (Psíquico/Lucha) / Malamar (Siniestro/Psíquico)</td><td>Hydreigon (Siniestro/Dragón)</td><td>Mordida</td><td>Weavile (Siniestro/Hielo)</td><td>Mordida</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Bicho, Fantasma, Siniestro</div>
+        </div>
+
+        <!-- 🔹 14. “¡Soy fuerte como una roca!” -->
+        <button class="btn">¡Soy fuerte como una roca!</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Amaura</th><th>Ataque</th><th>Mejor vs Roggenrola</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Amaura (Hielo/Roca) / Roggenrola (Roca)</td><td>Lucario (Lucha/Acero)</td><td>Contraataque</td><td>Swampert (Agua/Tierra)</td><td>Hidropulso</td></tr>
+              <tr><td>2º</td><td>Graveler (Roca/Tierra) / Cranidos (Roca)</td><td>Conkeldurr (Lucha)</td><td>Golpe Roca</td><td>Kingler (Agua)</td><td>Burbuja</td></tr>
+              <tr><td>3º</td><td>Golem (Roca/Tierra) / Tyrantrum (Roca/Dragón)</td><td>Machamp (Lucha)</td><td>Contraataque</td><td>Kyogre (Agua)</td><td>Aqua Cola</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Agua, Planta, Lucha, Tierra, Acero</div>
+        </div>
+
+        <!-- 🔹 15. “Donde quiera que hay luz, también hay sombras…” -->
+        <button class="btn">Donde hay luz, hay sombras…</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Cacnea</th><th>Ataque</th><th>Mejor vs Rattata-A</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Cacnea (Planta) / Rattata-A (Siniestro/Normal)</td><td>Mewtwo (Psíquico)</td><td>Confusión</td><td>Machamp (Lucha)</td><td>Contraataque</td></tr>
+              <tr><td>2º</td><td>Muk-A (Veneno/Siniestro) / Skuntank (Veneno/Siniestro)</td><td>Lugia (Psíquico/Volador)</td><td>Dragón Ala</td><td>Lucario (Lucha/Acero)</td><td>Contraataque</td></tr>
+              <tr><td>3º</td><td>—</td><td>Hoopa (Psíquico/Fantasma)</td><td>Confusión</td><td>Conkeldurr (Lucha)</td><td>Contraataque</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Lucha, Bicho, Hada</div>
+        </div>
+
+        <!-- 🔹 16. “¡Haré que te comas el polvo!” -->
+        <button class="btn">¡Haré que te comas el polvo!</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Sandshrew</th><th>Ataque</th><th>Mejor vs Gligar</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Sandshrew (Tierra) / Gligar (Tierra/Volador)</td><td>Swampert (Agua/Tierra)</td><td>Hidropulso</td><td>Mamoswine (Hielo/Tierra)</td><td>Polvo Hielo</td></tr>
+              <tr><td>2º</td><td>Vibrava (Tierra/Dragón) / Donphan (Tierra)</td><td>Kyogre (Agua)</td><td>Aqua Cola</td><td>Weavile (Siniestro/Hielo)</td><td>Garra Umbría</td></tr>
+              <tr><td>3º</td><td>Whiscash (Agua/Tierra) / Flygon (Tierra/Dragón)</td><td>Kingler (Agua)</td><td>Burbuja</td><td>Glaceon (Hielo)</td><td>Polvo Hielo</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Agua, Planta, Hielo</div>
+        </div>
+
+        <!-- 🔹 17. “¡En posición y listo para atacar!” -->
+        <button class="btn">¡En posición y listo para atacar!</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Trubbish</th><th>Ataque</th><th>Mejor vs Skorupi</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Trubbish (Veneno) / Skorupi (Veneno/Bicho)</td><td>Mewtwo (Psíquico)</td><td>Confusión</td><td>Mewtwo (Psíquico)</td><td>Confusión</td></tr>
+              <tr><td>2º</td><td>Nidorina (Veneno) / Nidorino (Veneno)</td><td>Lugia (Psíquico/Volador)</td><td>Dragón Ala</td><td>Lugia (Psíquico/Volador)</td><td>Dragón Ala</td></tr>
+              <tr><td>3º</td><td>Toxicroak (Veneno/Lucha) / Amoonguss (Planta/Veneno)</td><td>Hoopa (Psíquico/Fantasma)</td><td>Confusión</td><td>Hoopa (Psíquico/Fantasma)</td><td>Confusión</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Tierra, Psíquico</div>
+        </div>
+
+        <!-- 🔹 18. “¡Mi Pokémon pájaro quiere combatir contigo!” -->
+        <button class="btn">¡Mi Pokémon pájaro quiere combatir contigo!</button>
+        <div class="panel">
+          <div class="scroll">
+            <table>
+              <tr><th>Orden</th><th>Pokémon Rival</th><th>Mejor vs Pidgey</th><th>Ataque</th><th>Mejor vs Taillow</th><th>Ataque</th></tr>
+              <tr><td>1º</td><td>Pidgey (Normal/Volador) / Taillow (Normal/Volador)</td><td>Magnezone (Eléctrico/Acero)</td><td>Chispazo</td><td>Magnezone (Eléctrico/Acero)</td><td>Chispazo</td></tr>
+              <tr><td>2º</td><td>Gligar (Tierra/Volador) / Swellow (Normal/Volador)</td><td>Electivire (Eléctrico)</td><td>Chispazo</td><td>Electivire (Eléctrico)</td><td>Chispazo</td></tr>
+              <tr><td>3º</td><td>Dragonite (Dragón/Volador) / Pidgeot (Normal/Volador)</td><td>Zapdos (Eléctrico/Volador)</td><td>Chispazo</td><td>Zapdos (Eléctrico/Volador)</td><td>Chispazo</td></tr>
+            </table>
+          </div>
+          <div class="counter">Counter: Eléctrico, Hielo, Roca</div>
+        </div>
+
+        <script>
+          document.querySelectorAll('.btn').forEach(b=>{
+            b.addEventListener('click',()=>{
+              b.classList.toggle('active');
+              let p=b.nextElementSibling;
+              p.style.maxHeight=p.style.maxHeight?null:p.scrollHeight+'px';
+            });
+          });
+        </script>
+    </main>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

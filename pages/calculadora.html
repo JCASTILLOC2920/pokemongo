@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora PvP IV - Pokémon GO Hub</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1 class="main-title">Pokémon GO Hub</h1>
+        </div>
+    </header>
+
+    <nav class="sidenav" id="sidenav">
+        <a href="../index.html" class="nav-item">Índice</a>
+        <a href="pokemon-go-regiones.html" class="nav-item">Busca Pokémon</a>
+        <a href="calculadora.html" class="nav-item">Calculadora PvP IV</a>
+        <a href="kanto.html" class="nav-item">Kanto</a>
+        <a href="Johto.html" class="nav-item">Johto</a>
+        <a href="Hoenn.html" class="nav-item">Hoenn</a>
+        <a href="Sinnoh.html" class="nav-item">Sinnoh</a>
+        <a href="Teselia.html" class="nav-item">Teselia (Unova)</a>
+        <a href="kalos.html" class="nav-item">Kalos</a>
+        <a href="alola.html" class="nav-item">Alola</a>
+        <a href="galar.html" class="nav-item">Galar</a>
+        <a href="paldea.html" class="nav-item">Paldea</a>
+        <a href="reclutas.html" class="nav-item">Reclutas</a>
+        <a href="lideres.html" class="nav-item">Líderes</a>
+        <a href="galeria.html" class="nav-item">Galería</a>
+    </nav>
+
+    <main class="content" id="content">
+        <h2>Calculadora Pvp IV</h2>
+        <div class="calculator-container">
+            <div class="form-group">
+                <label for="pokemon-name">Pokémon</label>
+                <input type="text" id="pokemon-name" placeholder="Ej: Bulbasaur" autocomplete="off">
+                <div id="autocomplete-results"></div>
+            </div>
+            <div class="form-group">
+                <label for="pc">PC</label>
+                <input type="number" id="pc" placeholder="Ej: 500">
+            </div>
+            <div class="iv-group">
+                <div class="form-group">
+                    <label for="attack-iv">Ataque IV</label>
+                    <input type="number" id="attack-iv" min="0" max="15" placeholder="0-15">
+                </div>
+                <div class="form-group">
+                    <label for="defense-iv">Defensa IV</label>
+                    <input type="number" id="defense-iv" min="0" max="15" placeholder="0-15">
+                </div>
+                <div class="form-group">
+                    <label for="hp-iv">PS IV</label>
+                    <input type="number" id="hp-iv" min="0" max="15" placeholder="0-15">
+                </div>
+            </div>
+            <button id="calculate-btn" class="cta-button">Calcular</button>
+            <div id="result-container"></div>
+        </div>
+    </main>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/calculator.js"></script>
+</body>
+</html>

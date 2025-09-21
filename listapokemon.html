@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pokémon GO - Buscador PvP por Región</title>
+
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#f5f5f5;color:#333;padding:20px}
+    h1{text-align:center;margin-bottom:12px;font-size:1.6rem;color:#ff5722}
+    .search-box{max-width:600px;margin:0 auto 20px auto;position:relative}
+    .search-box input{width:100%;padding:12px 14px;font-size:1rem;border:2px solid #ff5722;border-radius:8px}
+    .suggestions{position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #ddd;border-top:none;border-radius:0 0 8px 8px;max-height:220px;overflow-y:auto;z-index:10}
+    .suggestions div{padding:10px 14px;cursor:pointer}
+    .suggestions div:hover{background:#ffe0d6}
+    table{width:100%;max-width:600px;margin:0 auto;border-collapse:collapse;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.1);border-radius:8px;overflow:hidden}
+    th,td{padding:12px 14px;text-align:left;font-size:.95rem}
+    th{background:#ff5722;color:#fff}
+    tr:nth-child(even){background:#f9f9f9}
+    /* FILA-BOTÓN */
+    #regionTable tr{cursor:pointer;transition:background .2s}
+    #regionTable tr:hover{background:#ffe0d6}
+    /* Mini-tabla PvP */
+    .pvp-table{width:100%;margin-top:8px;font-size:.85rem;border:1px solid #ffcccb}
+    .pvp-table th{background:#e53935;font-size:.8rem}
+    .pvp-table td,.pvp-table th{padding:6px 8px}
+    @media(max-width:480px){h1{font-size:1.4rem}th,td{font-size:.85rem;padding:10px 12px}}
+  </style>
+</head>
+<body>
+
+  <h1>Pokémon GO - Buscador PvP por Región</h1>
+
+  <!-- BUSCADOR -->
+  <div class="search-box">
+    <input id="searchInput" type="text" placeholder="Buscar Pokémon…" autocomplete="off"/>
+    <div id="suggestions" class="suggestions" style="display:none"></div>
+  </div>
+
+  <!-- TABLA RESUMEN REGIONES -->
+  <table>
+    <thead>
+      <tr><th>Región</th><th>Total en GO</th></tr>
+    </thead>
+    <tbody id="regionTable">
+      <tr onclick="location.href='kanto.html'"><td>Kanto</td><td>151</td></tr>
+      <tr onclick="location.href='johto.html'"><td>Johto</td><td>100</td></tr>
+      <tr onclick="location.href='hoenn.html'"><td>Hoenn</td><td>135</td></tr>
+      <tr onclick="location.href='sinnoh.html'"><td>Sinnoh</td><td>107</td></tr>
+      <tr onclick="location.href='teselia.html'"><td>Teselia (Unova)</td><td>156</td></tr>
+      <tr onclick="location.href='kalos.html'"><td>Kalos</td><td>72</td></tr>
+      <tr onclick="location.href='alola.html'"><td>Alola</td><td>63</td></tr>
+      <tr onclick="location.href='galar.html'"><td>Galar</td><td>19</td></tr>
+      <tr onclick="location.href='paldea.html'"><td>Paldea</td><td>3</td></tr>
+    </tbody>
+  </table>
+
+  <!-- LISTA COMPLETA POKÉMON + DATOS PvP -->
+  <script>
+    /* ---------- 1. LISTA MAESTRA ---------- */
+    const pokedex = [
+      // Kanto
+      "Bulbasaur#1#Kanto","Ivysaur#2#Kanto","Venusaur#3#Kanto","Charmander#4#Kanto","Charmeleon#5#Kanto","Charizard#6#Kanto","Squirtle#7#Kanto","Wartortle#8#Kanto","Blastoise#9#Kanto",
+      "Caterpie#10#Kanto","Metapod#11#Kanto","Butterfree#12#Kanto","Weedle#13#Kanto","Kakuna#14#Kanto","Beedrill#15#Kanto","Pidgey#16#Kanto","Pidgeotto#17#Kanto","Pidgeot#18#Kanto",
+      "Rattata#19#Kanto","Raticate#20#Kanto","Spearow#21#Kanto","Fearow#22#Kanto","Ekans#23#Kanto","Arbok#24#Kanto","Pikachu#25#Kanto","Raichu#26#Kanto","Sandshrew#27#Kanto","Sandslash#28#Kanto",
+      "Nidoran♀#29#Kanto","Nidorina#30#Kanto","Nidoqueen#31#Kanto","Nidoran♂#32#Kanto","Nidorino#33#Kanto","Nidoking#34#Kanto","Clefairy#35#Kanto","Clefable#36#Kanto","Vulpix#37#Kanto","Ninetales#38#Kanto",
+      "Jigglypuff#39#Kanto","Wigglytuff#40#Kanto","Zubat#41#Kanto","Golbat#42#Kanto","Oddish#43#Kanto","Gloom#44#Kanto","Vileplume#45#Kanto","Paras#46#Kanto","Parasect#47#Kanto","Venonat#48#Kanto","Venomoth#49#Kanto",
+      "Diglett#50#Kanto","Dugtrio#51#Kanto","Meowth#52#Kanto","Persian#53#Kanto","Psyduck#54#Kanto","Golduck#55#Kanto","Mankey#56#Kanto","Primeape#57#Kanto","Growlithe#58#Kanto","Arcanine#59#Kanto",
+      "Poliwag#60#Kanto","Poliwhirl#61#Kanto","Poliwrath#62#Kanto","Abra#63#Kanto","Kadabra#64#Kanto","Alakazam#65#Kanto","Machop#66#Kanto","Machoke#67#Kanto","Machamp#68#Kanto",
+      "Bellsprout#69#Kanto","Weepinbell#70#Kanto","Victreebel#71#Kanto","Tentacool#72#Kanto","Tentacruel#73#Kanto","Geodude#74#Kanto","Graveler#75#Kanto","Golem#76#Kanto","Ponyta#77#Kanto","Rapidash#78#Kanto",
+      "Slowpoke#79#Kanto","Slowbro#80#Kanto","Magnemite#81#Kanto","Magneton#82#Kanto","Farfetch’d#83#Kanto","Doduo#84#Kanto","Dodrio#85#Kanto","Seel#86#Kanto","Dewgong#87#Kanto",
+      "Grimer#88#Kanto","Muk#89#Kanto","Shellder#90#Kanto","Cloyster#91#Kanto","Gastly#92#Kanto","Haunter#93#Kanto","Gengar#94#Kanto","Onix#95#Kanto","Drowzee#96#Kanto","Hypno#97#Kanto",
+      "Krabby#98#Kanto","Kingler#99#Kanto","Voltorb#100#Kanto","Electrode#101#Kanto","Exeggcute#102#Kanto","Exeggutor#103#Kanto","Cubone#104#Kanto","Marowak#105#Kanto","Hitmonlee#106#Kanto","Hitmonchan#107#Kanto",
+      "Lickitung#108#Kanto","Koffing#109#Kanto","Weezing#110#Kanto","Rhyhorn#111#Kanto","Rhydon#112#Kanto","Chansey#113#Kanto","Tangela#114#Kanto","Kangaskhan#115#Kanto","Horsea#116#Kanto","Seadra#117#Kanto",
+      "Goldeen#118#Kanto","Seaking#119#Kanto","Staryu#120#Kanto","Starmie#121#Kanto","Mr. Mime#122#Kanto","Scyther#123#Kanto","Jynx#124#Kanto","Electabuzz#125#Kanto","Magmar#126#Kanto","Pinsir#127#Kanto",
+      "Tauros#128#Kanto","Magikarp#129#Kanto","Gyarados#130#Kanto","Lapras#131#Kanto","Ditto#132#Kanto","Eevee#133#Kanto","Vaporeon#134#Kanto","Jolteon#135#Kanto","Flareon#136#Kanto","Porygon#137#Kanto",
+      "Omanyte#138#Kanto","Omastar#139#Kanto","Kabuto#140#Kanto","Kabutops#141#Kanto","Aerodactyl#142#Kanto","Snorlax#143#Kanto","Articuno#144#Kanto","Zapdos#145#Kanto","Moltres#146#Kanto",
+      "Dratini#147#Kanto","Dragonair#148#Kanto","Dragonite#149#Kanto","Mewtwo#150#Kanto","Mew#151#Kanto",
+      // Johto
+      "Chikorita#152#Johto","Bayleef#153#Johto","Meganium#154#Johto","Cyndaquil#155#Johto","Quilava#156#Johto","Typhlosion#157#Johto","Totodile#158#Johto","Croconaw#159#Johto","Feraligatr#160#Johto",
+      "Sentret#161#Johto","Furret#162#Johto","Hoothoot#163#Johto","Noctowl#164#Johto","Ledyba#165#Johto","Ledian#166#Johto","Spinarak#167#Johto","Ariados#168#Johto","Crobat#169#Johto","Chinchou#170#Johto","Lanturn#171#Johto",
+      "Pichu#172#Johto","Cleffa#173#Johto","Igglybuff#174#Johto","Togepi#175#Johto","Togetic#176#Johto","Natu#177#Johto","Xatu#178#Johto","Mareep#179#Johto","Flaaffy#180#Johto","Ampharos#181#Johto","Bellossom#182#Johto",
+      "Marill#183#Johto","Azumarill#184#Johto","Sudowoodo#185#Johto","Politoed#186#Johto","Hoppip#187#Johto","Skiploom#188#Johto","Jumpluff#189#Johto","Aipom#190#Johto","Sunkern#191#Johto","Sunflora#192#Johto","Yanma#193#Johto",
+      "Wooper#194#Johto","Quagsire#195#Johto","Espeon#196#Johto","Umbreon#197#Johto","Murkrow#198#Johto","Slowking#199#Johto","Misdreavus#200#Johto","Unown#201#Johto","Wobbuffet#202#Johto","Girafarig#203#Johto",
+      "Pineco#204#Johto","Forretress#205#Johto","Dunsparce#206#Johto","Gligar#207#Johto","Steelix#208#Johto","Snubbull#209#Johto","Granbull#210#Johto","Qwilfish#211#Johto","Scizor#212#Johto","Shuckle#213#Johto",
+      "Heracross#214#Johto","Sneasel#215#Johto","Teddiursa#216#Johto","Ursaring#217#Johto","Slugma#218#Johto","Magcargo#219#Johto","Swinub#220#Johto","Piloswine#221#Johto","Corsola#222#Johto","Remoraid#223#Johto",
+      "Octillery#224#Johto","Delibird#225#Johto","Mantine#226#Johto","Skarmory#227#Johto","Houndour#228#Johto","Houndoom#229#Johto","Kingdra#230#Johto","Phanpy#231#Johto","Donphan#232#Johto","Porygon2#233#Johto",
+      "Stantler#234#Johto","Smeargle#235#Johto","Tyrogue#236#Johto","Hitmontop#237#Johto","Smoochum#238#Johto","Elekid#239#Johto","Magby#240#Johto","Miltank#241#Johto","Blissey#242#Johto","Raikou#243#Johto",
+      "Entei#244#Johto","Suicune#245#Johto","Larvitar#246#Johto","Pupitar#247#Johto","Tyranitar#248#Johto","Lugia#249#Johto","Ho-Oh#250#Johto","Celebi#251#Johto",
+      // Hoenn
+      "Treecko#252#Hoenn","Grovyle#253#Hoenn","Sceptile#254#Hoenn","Torchic#255#Hoenn","Combusken#256#Hoenn","Blaziken#257#Hoenn","Mudkip#258#Hoenn","Marshtomp#259#Hoenn","Swampert#260#Hoenn",
+      "Poochyena#261#Hoenn","Mightyena#262#Hoenn","Zigzagoon#263#Hoenn","Linoone#264#Hoenn","Wurmple#265#Hoenn","Silcoon#266#Hoenn","Beautifly#267#Hoenn","Cascoon#268#Hoenn","Dustox#269#Hoenn",
+      "Lotad#270#Hoenn","Lombre#271#Hoenn","Ludicolo#272#Hoenn","Seedot#273#Hoenn","Nuzleaf#274#Hoenn","Shiftry#275#Hoenn","Taillow#276#Hoenn","Swellow#277#Hoenn","Wingull#278#Hoenn","Pelipper#279#Hoenn",
+      "Ralts#280#Hoenn","Kirlia#281#Hoenn","Gardevoir#282#Hoenn","Surskit#283#Hoenn","Masquerain#284#Hoenn","Shroomish#285#Hoenn","Breloom#286#Hoenn","Slakoth#287#Hoenn","Vigoroth#288#Hoenn","Slaking#289#Hoenn",
+      "Nincada#290#Hoenn","Ninjask#291#Hoenn","Shedinja#292#Hoenn","Whismur#293#Hoenn","Loudred#294#Hoenn","Exploud#295#Hoenn","Makuhita#296#Hoenn","Hariyama#297#Hoenn","Azurill#298#Hoenn","Skitty#299#Hoenn",
+      "Delcatty#300#Hoenn","Sableye#301#Hoenn","Mawile#302#Hoenn","Aron#303#Hoenn","Lairon#304#Hoenn","Aggron#305#Hoenn","Meditite#306#Hoenn","Medicham#307#Hoenn","Electrike#308#Hoenn","Manectric#309#Hoenn",
+      "Plusle#310#Hoenn","Minun#311#Hoenn","Volbeat#312#Hoenn","Illumise#313#Hoenn","Roselia#314#Hoenn","Gulpin#315#Hoenn","Swalot#316#Hoenn","Carvanha#317#Hoenn","Sharpedo#318#Hoenn","Wailmer#319#Hoenn",
+      "Wailord#320#Hoenn","Numel#321#Hoenn","Camerupt#322#Hoenn","Torkoal#323#Hoenn","Spoink#324#Hoenn","Grumpig#325#Hoenn","Spinda#326#Hoenn","Trapinch#327#Hoenn","Vibrava#328#Hoenn","Flygon#329#Hoenn",
+      "Cacnea#330#Hoenn","Cacturne#331#Hoenn","Swablu#332#Hoenn","Altaria#333#Hoenn","Zangoose#334#Hoenn","Seviper#335#Hoenn","Lunatone#336#Hoenn","Solrock#337#Hoenn","Barboach#338#Hoenn","Whiscash#339#Hoenn",
+      "Corphish#340#Hoenn","Crawdaunt#341#Hoenn","Baltoy#342#Hoenn","Claydol#343#Hoenn","Lileep#344#Hoenn","Cradily#345#Hoenn","Anorith#346#Hoenn","Armaldo#347#Hoenn","Feebas#348#Hoenn","Milotic#349#Hoenn",
+      "Castform#350#Hoenn","Kecleon#351#Hoenn","Shuppet#352#Hoenn","Banette#353#Hoenn","Duskull#354#Hoenn","Dusclops#355#Hoenn","Tropius#356#Hoenn","Chimecho#357#Hoenn","Absol#358#Hoenn","Wynaut#359#Hoenn",
+      "Snorunt#360#Hoenn","Glalie#361#Hoenn","Spheal#362#Hoenn","Sealeo#363#Hoenn","Walrein#364#Hoenn","Clamperl#365#Hoenn","Huntail#366#Hoenn","Gorebyss#367#Hoenn","Relicanth#368#Hoenn","Luvdisc#369#Hoenn",
+      "Bagon#370#Hoenn","Shelgon#371#Hoenn","Salamence#372#Hoenn","Beldum#373#Hoenn","Metang#374#Hoenn","Metagross#375#Hoenn","Regirock#376#Hoenn","Regice#377#Hoenn","Registeel#378#Hoenn","Latias#380#Hoenn",
+      "Latios#381#Hoenn","Kyogre#382#Hoenn","Groudon#383#Hoenn","Rayquaza#384#Hoenn","Jirachi#385#Hoenn","Deoxys#386#Hoenn",
+      // Sinnoh
+      "Turtwig#387#Sinnoh","Grotle#388#Sinnoh","Torterra#389#Sinnoh","Chimchar#390#Sinnoh","Monferno#391#Sinnoh","Infernape#392#Sinnoh","Piplup#393#Sinnoh","Prinplup#394#Sinnoh","Empoleon#395#Sinnoh",
+      "Starly#396#Sinnoh","Staravia#397#Sinnoh","Staraptor#398#Sinnoh","Bidoof#399#Sinnoh","Bibarel#400#Sinnoh","Kricketot#401#Sinnoh","Kricketune#402#Sinnoh","Shinx#403#Sinnoh","Luxio#404#Sinnoh","Luxray#405#Sinnoh",
+      "Budew#406#Sinnoh","Roserade#407#Sinnoh","Cranidos#408#Sinnoh","Rampardos#409#Sinnoh","Shieldon#410#Sinnoh","Bastiodon#411#Sinnoh","Burmy#412#Sinnoh","Wormadam#413#Sinnoh","Mothim#414#Sinnoh","Combee#415#Sinnoh",
+      "Vespiquen#416#Sinnoh","Pachirisu#417#Sinnoh","Buizel#418#Sinnoh","Floatzel#419#Sinnoh","Cherubi#420#Sinnoh","Cherrim#421#Sinnoh","Shellos#422#Sinnoh","Gastrodon#423#Sinnoh","Ambipom#424#Sinnoh","Drifloon#425#Sinnoh",
+      "Drifblim#426#Sinnoh","Buneary#427#Sinnoh","Lopunny#428#Sinnoh","Mismagius#429#Sinnoh","Honchkrow#430#Sinnoh","Glameow#431#Sinnoh","Purugly#432#Sinnoh","Chingling#433#Sinnoh","Stunky#434#Sinnoh","Skuntank#435#Sinnoh",
+      "Bronzor#436#Sinnoh","Bronzong#437#Sinnoh","Bonsly#438#Sinnoh","Mime Jr.#439#Sinnoh","Happiny#440#Sinnoh","Chatot#441#Sinnoh","Spiritomb#442#Sinnoh","Gible#443#Sinnoh","Gabite#444#Sinnoh","Garchomp#445#Sinnoh",
+      "Munchlax#446#Sinnoh","Riolu#447#Sinnoh","Lucario#448#Sinnoh","Hippopotas#449#Sinnoh","Hippowdon#450#Sinnoh","Skorupi#451#Sinnoh","Drapion#452#Sinnoh","Croagunk#453#Sinnoh","Toxicroak#454#Sinnoh","Carnivine#455#Sinnoh",
+      "Finneon#456#Sinnoh","Lumineon#457#Sinnoh","Mantyke#458#Sinnoh","Snover#459#Sinnoh","Abomasnow#460#Sinnoh","Weavile#461#Sinnoh","Magnezone#462#Sinnoh","Lickilicky#463#Sinnoh","Rhyperior#464#Sinnoh",
+      "Tangrowth#465#Sinnoh","Electivire#466#Sinnoh","Magmortar#467#Sinnoh","Togekiss#468#Sinnoh","Yanmega#469#Sinnoh","Leafeon#470#Sinnoh","Glaceon#471#Sinnoh","Gliscor#472#Sinnoh","Mamoswine#473#Sinnoh",
+      "Porygon-Z#474#Sinnoh","Gallade#475#Sinnoh","Probopass#476#Sinnoh","Dusknoir#477#Sinnoh","Froslass#478#Sinnoh","Rotom#479#Sinnoh","Uxie#480#Sinnoh","Mesprit#481#Sinnoh","Azelf#482#Sinnoh",
+      "Dialga#483#Sinnoh","Palkia#484#Sinnoh","Heatran#485#Sinnoh","Regigigas#486#Sinnoh","Giratina#487#Sinnoh","Cresselia#488#Sinnoh","Phione#489#Sinnoh","Manaphy#490#Sinnoh","Darkrai#491#Sinnoh",
+      "Shaymin#492#Sinnoh","Arceus#493#Sinnoh",
+      // Teselia / Unova
+      "Victini#494#Teselia","Snivy#495#Teselia","Servine#496#Teselia","Serperior#497#Teselia","Tepig#498#Teselia","Pignite#499#Teselia","Emboar#500#Teselia","Oshawott#501#Teselia","Dewott#502#Teselia","Samurott#503#Teselia",
+      "Patrat#504#Teselia","Watchog#505#Teselia","Lillipup#506#Teselia","Herdier#507#Teselia","Stoutland#508#Teselia","Purrloin#509#Teselia","Liepard#510#Teselia","Pansage#511#Teselia","Simisage#512#Teselia","Pansear#513#Teselia",
+      "Simisear#514#Teselia","Panpour#515#Teselia","Simipour#516#Teselia","Munna#517#Teselia","Musharna#518#Teselia","Pidove#519#Teselia","Tranquill#520#Teselia","Unfezant#521#Teselia","Blitzle#522#Teselia","Zebstrika#523#Teselia",
+      "Roggenrola#524#Teselia","Boldore#525#Teselia","Gigalith#526#Teselia","Woobat#527#Teselia","Swoobat#528#Teselia","Drilbur#529#Teselia","Excadrill#530#Teselia","Audino#531#Teselia","Timburr#532#Teselia","Gurdurr#533#Teselia",
+      "Conkeldurr#534#Teselia","Tympole#535#Teselia","Palpitoad#536#Teselia","Seismitoad#537#Teselia","Throh#538#Teselia","Sawk#539#Teselia","Sewaddle#540#Teselia","Swadloon#541#Teselia","Leavanny#542#Teselia",
+      "Venipede#543#Teselia","Whirlipede#544#Teselia","Scolipede#545#Teselia","Cottonee#546#Teselia","Whimsicott#547#Teselia","Petilil#548#Teselia","Lilligant#549#Teselia","Basculin#550#Teselia","Sandile#551#Teselia",
+      "Krokorok#552#Teselia","Krookodile#553#Teselia","Darumaka#554#Teselia","Darmanitan#555#Teselia","Maractus#556#Teselia","Dwebble#557#Teselia","Crustle#558#Teselia","Scraggy#559#Teselia","Scrafty#560#Teselia",
+      "Sigilyph#561#Teselia","Yamask#562#Teselia","Cofagrigus#563#Teselia","Tirtouga#564#Teselia","Carracosta#565#Teselia","Archen#566#Teselia","Archeops#567#Teselia","Trubbish#568#Teselia","Garbodor#569#Teselia",
+      "Zorua#570#Teselia","Zoroark#571#Teselia","Minccino#572#Teselia","Cinccino#573#Teselia","Gothita#574#Teselia","Gothorita#575#Teselia","Gothitelle#576#Teselia","Solosis#577#Teselia","Duosion#578#Teselia","Reuniclus#579#Teselia",
+      "Ducklett#580#Teselia","Swanna#581#Teselia","Vanillite#582#Teselia","Vanillish#583#Teselia","Vanilluxe#584#Teselia","Deerling#585#Teselia","Sawsbuck#586#Teselia","Emolga#587#Teselia","Karrablast#588#Teselia","Escavalier#589#Teselia",
+      "Foongus#590#Teselia","Amoonguss#591#Teselia","Frillish#592#Teselia","Jellicent#593#Teselia","Alomomola#594#Teselia","Joltik#595#Teselia","Galvantula#596#Teselia","Ferroseed#597#Teselia","Ferrothorn#598#Teselia",
+      "Klink#599#Teselia","Klang#600#Teselia","Klinklang#601#Teselia","Tynamo#602#Teselia","Eelektrik#603#Teselia","Eelektross#604#Teselia","Elgyem#605#Teselia","Beheeyem#606#Teselia","Litwick#607#Teselia","Lampent#608#Teselia","Chandelure#609#Teselia",
+      "Axew#610#Teselia","Fraxure#611#Teselia","Haxorus#612#Teselia","Cubchoo#613#Teselia","Beartic#614#Teselia","Cryogonal#615#Teselia","Shelmet#616#Teselia","Accelgor#617#Teselia","Stunfisk#618#Teselia","Mienfoo#619#Teselia",
+      "Mienshao#620#Teselia","Druddigon#621#Teselia","Golett#622#Teselia","Golurk#623#Teselia","Pawniard#624#Teselia","Bisharp#625#Teselia","Bouffalant#626#Teselia","Rufflet#627#Teselia","Braviary#628#Teselia","Vullaby#629#Teselia",
+      "Mandibuzz#630#Teselia","Heatmor#631#Teselia","Durant#632#Teselia","Deino#633#Teselia","Zweilous#634#Teselia","Hydreigon#635#Teselia","Larvesta#636#Teselia","Volcarona#637#Teselia","Cobalion#638#Teselia",
+      "Terrakion#639#Teselia","Virizion#640#Teselia","Tornadus#641#Teselia","Thundurus#642#Teselia","Reshiram#643#Teselia","Zekrom#644#Teselia","Landorus#645#Teselia","Kyurem#646#Teselia","Keldeo#647#Teselia",
+      "Meloetta#648#Teselia","Genesect#649#Teselia",
+      // Kalos
+      "Chespin#650#Kalos","Quilladin#651#Kalos","Chesnaught#652#Kalos","Fennekin#653#Kalos","Braixen#654#Kalos","Delphox#655#Kalos","Froakie#656#Kalos","Frogadier#657#Kalos","Greninja#658#Kalos",
+      "Bunnelby#659#Kalos","Diggersby#660#Kalos","Fletchling#661#Kalos","Fletchinder#662#Kalos","Talonflame#663#Kalos","Scatterbug#664#Kalos","Spewpa#665#Kalos","Vivillon#666#Kalos","Litleo#667#Kalos","Pyroar#668#Kalos",
+      "Flabébé#669#Kalos","Floette#670#Kalos","Florges#671#Kalos","Skiddo#672#Kalos","Gogoat#673#Kalos","Pancham#674#Kalos","Pangoro#675#Kalos","Furfrou#676#Kalos","Espurr#677#Kalos","Meowstic#678#Kalos",
+      "Honedge#679#Kalos","Doublade#680#Kalos","Aegislash#681#Kalos","Spritzee#682#Kalos","Aromatisse#683#Kalos","Swirlix#684#Kalos","Slurpuff#685#Kalos","Inkay#686#Kalos","Malamar#687#Kalos","Binacle#688#Kalos",
+      "Barbaracle#689#Kalos","Skrelp#690#Kalos","Dragalge#691#Kalos","Clauncher#692#Kalos","Clawitzer#693#Kalos","Helioptile#694#Kalos","Heliolisk#695#Kalos","Tyrunt#696#Kalos","Tyrantrum#697#Kalos",
+      "Amaura#698#Kalos","Aurorus#699#Kalos","Sylveon#700#Kalos","Hawlucha#701#Kalos","Dedenne#702#Kalos","Carbink#703#Kalos","Klefki#705#Kalos","Phantump#708#Kalos","Trevenant#709#Kalos",
+      "Pumpkaboo#710#Kalos","Gourgeist#711#Kalos","Bergmite#712#Kalos","Avalugg#713#Kalos","Noibat#714#Kalos","Noivern#715#Kalos","Xerneas#716#Kalos","Yveltal#717#Kalos","Zygarde#718#Kalos","Diancie#719#Kalos",
+      "Hoopa#720#Kalos","Volcanion#721#Kalos",
+      // Alola
+      "Rowlet#722#Alola","Dartrix#723#Alola","Decidueye#724#Alola","Litten#725#Alola","Torracat#726#Alola","Incineroar#727#Alola","Popplio#728#Alola","Brionne#729#Alola","Primarina#730#Alola",
+      "Pikipek#731#Alola","Trumbeak#732#Alola","Toucannon#733#Alola","Yungoos#734#Alola","Gumshoos#735#Alola","Grubbin#736#Alola","Charjabug#737#Alola","Vikavolt#738#Alola","Crabrawler#739#Alola","Crabominable#740#Alola",
+      "Oricorio#741#Alola","Cutiefly#742#Alola","Ribombee#743#Alola","Rockruff#744#Alola","Lycanroc#745#Alola","Wishiwashi#746#Alola","Mareanie#747#Alola","Toxapex#748#Alola","Mudbray#749#Alola","Mudsdale#750#Alola",
+      "Dewpider#751#Alola","Araquanid#752#Alola","Fomantis#753#Alola","Lurantis#754#Alola","Morelull#755#Alola","Shiinotic#756#Alola","Salandit#757#Alola","Salazzle#758#Alola","Stufful#759#Alola","Bewear#760#Alola",
+      "Bounsweet#761#Alola","Steenee#762#Alola","Tsareena#763#Alola","Comfey#764#Alola","Oranguru#765#Alola","Passimian#766#Alola","Wimpod#767#Alola","Golisopod#768#Alola","Sandygast#769#Alola","Palossand#770#Alola",
+      "Pyukumuku#771#Alola","Type: Null#772#Alola","Silvally#773#Alola","Minior#774#Alola","Komala#775#Alola","Turtonator#776#Alola","Togedemaru#777#Alola","Mimikyu#778#Alola","Bruxish#779#Alola","Drampa#780#Alola",
+      "Dhelmise#781#Alola","Jangmo-o#782#Alola","Hakamo-o#783#Alola","Kommo-o#784#Alola","Tapu Koko#785#Alola","Tapu Lele#786#Alola","Tapu Bulu#787#Alola","Tapu Fini#788#Alola","Cosmog#789#Alola","Cosmoem#790#Alola",
+      "Solgaleo#791#Alola","Lunala#792#Alola","Necrozma#800#Alola","Magearna#801#Alola","Marshadow#802#Alola","Poipole#803#Alola","Naganadel#804#Alola","Stakataka#805#Alola","Blacephalon#806#Alola","Zeraora#807#Alola",
+      // Galar
+      "Grookey#810#Galar","Thwackey#811#Galar","Rillaboom#812#Galar","Scorbunny#813#Galar","Raboot#814#Galar","Cinderace#815#Galar","Sobble#816#Galar","Drizzile#817#Galar","Inteleon#818#Galar",
+      "Skwovet#819#Galar","Greedent#820#Galar","Rookidee#821#Galar","Corvisquire#822#Galar","Corviknight#823#Galar","Blipbug#824#Galar","Dottler#825#Galar","Orbeetle#826#Galar","Nickit#827#Galar","Thievul#828#Galar",
+      "Gossifleur#829#Galar","Eldegoss#830#Galar","Wooloo#831#Galar","Dubwool#832#Galar","Chewtle#833#Galar","Drednaw#834#Galar","Yamper#835#Galar","Boltund#836#Galar","Rolycoly#837#Galar","Carkol#838#Galar","Coalossal#839#Galar",
+      "Applin#840#Galar","Flapple#841#Galar","Appletun#842#Galar","Silicobra#843#Galar","Sandaconda#844#Galar","Arrokuda#845#Galar","Barraskewda#846#Galar","Toxel#847#Galar","Toxtricity#848#Galar","Sizzlipede#849#Galar",
+      "Centiskorch#850#Galar","Clobbopus#851#Galar","Grapploct#852#Galar","Sinistea#853#Galar","Polteageist#854#Galar","Hatenna#855#Galar","Hattrem#856#Galar","Hatterene#857#Galar","Impidimp#858#Galar","Morgrem#859#Galar",
+      "Grimmsnarl#860#Galar","Obstagoon#861#Galar","Perrserker#862#Galar","Sirfetch’d#865#Galar","Mr. Rime#866#Galar","Runerigus#867#Galar","Milcery#868#Galar","Alcremie#869#Galar","Falinks#870#Galar",
+      "Pincurchin#871#Galar","Snom#872#Galar","Frosmoth#873#Galar","Stonjourner#874#Galar","Eiscue#875#Galar","Indeedee#876#Galar","Morpeko#877#Galar","Cufant#878#Galar","Copperajah#879#Galar",
+      "Dracozolt#880#Galar","Arctozolt#881#Galar","Dracovish#882#Galar","Arctovish#883#Galar","Duraludon#884#Galar","Dreepy#885#Galar","Drakloak#886#Galar","Dragapult#887#Galar",
+      "Zacian#888#Galar","Zamazenta#889#Galar","Eternatus#890#Galar","Kubfu#891#Galar","Urshifu#892#Galar",
+      // Paldea
+      "Tatsugiri#977#Paldea"
+    ];
+
+    /* ---------- 2. BASE DE DATOS RÁPIDA PvP ---------- */
+    const pvpData = {
+      /* Kanto */
+      "Venusaur":   {evo:"Venusaur",   ligas:"Super, Ultra", iv:"0/14/15", limite:2494, maxAntes:1468},
+      "Charizard":  {evo:"Charizard",  ligas:"Super, Ultra", iv:"0/13/15", limite:2414, maxAntes:1425},
+      "Blastoise":  {evo:"Blastoise",  ligas:"Super",        iv:"1/14/15", limite:2466, maxAntes:1455},
+      "Alakazam":   {evo:"Alakazam",   ligas:"Super",        iv:"0/15/14", limite:2475, maxAntes:1495},
+      "Gengar":     {evo:"Gengar",     ligas:"Super, Ultra", iv:"0/14/15", limite:2481, maxAntes:1478},
+      "Machamp":    {evo:"Machamp",    ligas:"Super, Ultra", iv:"0/14/15", limite:2494, maxAntes:1480},
+      "Golem":      {evo:"Golem",      ligas:"Super",        iv:"0/14/15", limite:2466, maxAntes:1444},
+      "Rhydon":     {evo:"Rhyperior",  ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1435},
+      "Jolteon":    {evo:"Jolteon",    ligas:"Super",        iv:"0/15/14", limite:2479, maxAntes:1485},
+      "Vaporeon":   {evo:"Vaporeon",   ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1468},
+      "Flareon":    {evo:"Flareon",    ligas:"Super",        iv:"0/15/14", limite:2465, maxAntes:1475},
+      /* Johto */
+      "Feraligatr": {evo:"Feraligatr", ligas:"Super, Ultra", iv:"0/14/15", limite:2488, maxAntes:1475},
+      "Typhlosion": {evo:"Typhlosion", ligas:"Super, Ultra", iv:"0/14/15", limite:2481, maxAntes:1480},
+      "Meganium":   {evo:"Meganium",   ligas:"Super, Ultra", iv:"0/14/15", limite:2494, maxAntes:1466},
+      "Ampharos":   {evo:"Ampharos",   ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1475},
+      "Espeon":     {evo:"Espeon",     ligas:"Super",        iv:"0/15/14", limite:2477, maxAntes:1485},
+      "Umbreon":    {evo:"Umbreon",    ligas:"Super, Ultra", iv:"0/14/15", limite:2441, maxAntes:1425},
+      "Skarmory":   {evo:"Skarmory",   ligas:"Super",        iv:"0/14/15", limite:2383, maxAntes:1495},
+      /* Hoenn */
+      "Swampert":   {evo:"Swampert",   ligas:"Super, Ultra", iv:"0/14/15", limite:2494, maxAntes:1475},
+      "Blaziken":   {evo:"Blaziken",   ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1480},
+      "Sceptile":   {evo:"Sceptile",   ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1475},
+      "Gardevoir":  {evo:"Gardevoir",  ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1485},
+      "Breloom":    {evo:"Breloom",    ligas:"Super",        iv:"0/15/14", limite:2475, maxAntes:1485},
+      "Flygon":     {evo:"Flygon",     ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1475},
+      "Milotic":    {evo:"Milotic",    ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1468},
+      /* Sinnoh */
+      "Empoleon":   {evo:"Empoleon",   ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1475},
+      "Infernape":  {evo:"Infernape",  ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1480},
+      "Torterra":   {evo:"Torterra",   ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1466},
+      "Roserade":   {evo:"Roserade",   ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1485},
+      "Garchomp":   {evo:"Garchomp",   ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1475},
+      "Lucario":    {evo:"Lucario",    ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1480},
+      "Togekiss":   {evo:"Togekiss",   ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1485},
+      /* Teselia */
+      "Samurott":   {evo:"Samurott",   ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1475},
+      "Emboar":     {evo:"Emboar",     ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1480},
+      "Serperior":  {evo:"Serperior",  ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1466},
+      "Scrafty":    {evo:"Scrafty",    ligas:"Super, Ultra", iv:"0/14/15", limite:2441, maxAntes:1425},
+      "Galvantula": {evo:"Galvantula", ligas:"Super",        iv:"0/15/14", limite:2475, maxAntes:1485},
+      "Chandelure": {evo:"Chandelure", ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1485},
+      "Haxorus":    {evo:"Haxorus",    ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1475},
+      /* Kalos */
+      "Greninja":   {evo:"Greninja",   ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1485},
+      "Chesnaught": {evo:"Chesnaught", ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1466},
+      "Delphox":    {evo:"Delphox",    ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1480},
+      "Aegislash":  {evo:"Aegislash",  ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1475},
+      "Sylveon":    {evo:"Sylveon",    ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1485},
+      /* Alola */
+      "Decidueye":  {evo:"Decidueye",  ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1475},
+      "Incineroar": {evo:"Incineroar", ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1480},
+      "Primarina":  {evo:"Primarina",  ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1485},
+      "Mimikyu":    {evo:"Mimikyu",    ligas:"Super",        iv:"0/15/14", limite:2475, maxAntes:1485},
+      "Kommo-o":    {evo:"Kommo-o",    ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1475},
+      /* Galar */
+      "Cinderace":  {evo:"Cinderace",  ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1480},
+      "Inteleon":   {evo:"Inteleon",   ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1485},
+      "Rillaboom":  {evo:"Rillaboom",  ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1466},
+      "Dragapult":  {evo:"Dragapult",  ligas:"Ultra",        iv:"0/14/15", limite:2494, maxAntes:1485},
+      /* Paldea */
+      "Tatsugiri":  {evo:"Tatsugiri",  ligas:"Super",        iv:"1/15/15", limite:1500, maxAntes: 980}
+    };
+
+    /* ---------- 3. FUNCIONES AUXILIARES ---------- */
+    function norm(t) {
+      return t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
+    }
+    function getPvpData(name) {
+      return pvpData[name] || null;
+    }
+    function buildPvpTable(name) {
+      const data = getPvpData(name);
+      if (!data) return '<p style="padding:10px;color:#555">Sin datos PvP para este Pokémon.</p>';
+      return `
+        <table class="pvp-table">
+          <thead>
+            <tr><th>Pokémon</th><th>Mejor evol. PvP</th><th>Ligas</th><th>IV ideales</th><th>PC límite post-evol.</th><th>PC máx. ANTES evol.</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>${name}</td>
+              <td>${data.evo}</td>
+              <td>${data.ligas}</td>
+              <td>${data.iv}</td>
+              <td>${data.limite}</td>
+              <td>${data.maxAntes}</td>
+            </tr>
+          </tbody>
+        </table>`;
+    }
+
+    /* ---------- 4. BUSCADOR ---------- */
+    const input = document.getElementById('searchInput');
+    const box   = document.getElementById('suggestions');
+
+    function showSuggestions(val) {
+      const reg = new RegExp(norm(val), 'i');
+      const matches = pokedex
+        .filter(entry => reg.test(norm(entry.split('#')[0])))
+        .slice(0, 8)
+        .map(entry => {
+          const [name, num, region] = entry.split('#');
+          return { name, num, region };
+        });
+      box.innerHTML = '';
+      if (!val || matches.length === 0) {
+        box.style.display = 'none';
+        return;
+      }
+      matches.forEach(m => {
+        const div = document.createElement('div');
+        div.innerHTML = `${m.name} (#${m.num}) – ${m.region}`;
+        div.onclick = () => {
+          input.value = m.name;
+          box.style.display = 'none';
+          // mostramos la mini-tabla justo debajo del buscador
+          const tempDiv = document.createElement('div');
+          tempDiv.id = 'pvpResult';
+          tempDiv.style.cssText = 'max-width:600px;margin:10px auto;';
+          tempDiv.innerHTML = buildPvpTable(m.name);
+          const prev = document.getElementById('pvpResult');
+          if (prev) prev.remove();
+          document.querySelector('.search-box').after(tempDiv);
+        };
+        box.appendChild(div);
+      });
+      box.style.display = 'block';
+    }
+
+    input.addEventListener('input', e => showSuggestions(e.target.value));
+    input.addEventListener('focus', e => showSuggestions(e.target.value));
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.search-box')) box.style.display = 'none';
+    });
+  </script>
+</body>
+</html>

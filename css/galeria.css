@@ -1,0 +1,79 @@
+:root {
+    --gallery-bg: #F7F7F7;
+    --gallery-text: #333333;
+    --gallery-accent: #00BCD4; /* Changed to light blue */
+    --card-bg: #FFFFFF;
+}
+
+/* Override default body color for this page */
+body.gallery-page {
+    background-color: var(--gallery-bg);
+}
+
+.pokemon-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.pokemon-card {
+    position: relative;
+    width: 250px;
+    background-color: var(--card-bg);
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    cursor: pointer;
+    /* Initial state for scroll animation */
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
+}
+
+/* State when in view */
+.pokemon-card.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.pokemon-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.pokemon-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.pokemon-card:hover img {
+    transform: scale(1.1);
+}
+
+.pokemon-name {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    /* Initial state for name animation */
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+}
+
+.pokemon-card:hover .pokemon-name {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Add class to body in galeria.html to use these styles */

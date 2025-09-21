@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Líderes - Pokémon GO Hub</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+      body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f2f2f2;color:#333}
+      header{background:#004c99;color:#fff;padding:.6rem;text-align:center;font-size:1.1rem;font-weight:bold}
+      .btn{width:100%;border:none;background:#0066cc;color:#fff;padding:.8rem;font-size:1rem;text-align:left;cursor:pointer;border-bottom:1px solid #bbb;outline:none}
+      .btn:after{content:'▾';float:right}
+      .btn.active:after{content:'▴'}
+      .panel{max-height:0;overflow:hidden;background:#fff;transition:max-height .3s ease}
+      .panel table{width:100%;font-size:.8rem;border-collapse:collapse}
+      .panel th{background:#004c99;color:#fff;padding:.4rem}
+      .panel td{padding:.4rem;border-bottom:1px solid #ddd}
+      .counter{background:#eef;font-size:.75rem;padding:.3rem .5rem}
+      @media (max-width:360px){
+        .btn{padding:.6rem;font-size:.9rem}
+        .panel table{font-size:.75rem}
+      }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1 class="main-title">Pokémon GO Hub</h1>
+        </div>
+    </header>
+
+    <nav class="sidenav" id="sidenav">
+        <a href="../index.html" class="nav-item">Índice</a>
+        <a href="pokemon-go-regiones.html" class="nav-item">Busca Pokémon</a>
+        <a href="calculadora.html" class="nav-item">Calculadora PvP IV</a>
+        <a href="kanto.html" class="nav-item">Kanto</a>
+        <a href="Johto.html" class="nav-item">Johto</a>
+        <a href="Hoenn.html" class="nav-item">Hoenn</a>
+        <a href="Sinnoh.html" class="nav-item">Sinnoh</a>
+        <a href="Teselia.html" class="nav-item">Teselia (Unova)</a>
+        <a href="kalos.html" class="nav-item">Kalos</a>
+        <a href="alola.html" class="nav-item">Alola</a>
+        <a href="galar.html" class="nav-item">Galar</a>
+        <a href="paldea.html" class="nav-item">Paldea</a>
+        <a href="reclutas.html" class="nav-item">Reclutas</a>
+        <a href="lideres.html" class="nav-item">Líderes</a>
+        <a href="galeria.html" class="nav-item">Galería</a>
+    </nav>
+
+    <main class="content" id="content">
+        <header>Líderes Team Rocket</header>
+
+        <div class="accordion">
+
+          <div class="acc-item">
+            <button class="btn">🪨 Cliff: «¡No pienso perder ni un solo segundo!»</button>
+            <div class="panel">
+              <table>
+                <tr><th>Puesto</th><th>Pokémon</th></tr>
+                <tr><td>1º</td><td>Machop</td></tr>
+                <tr><td>2º</td><td>Hypno / Crobat / Gallade</td></tr>
+                <tr><td>3º</td><td>Tyranitar / Torterra / Dusknoir</td></tr>
+              </table>
+              <div class="counter"><strong>Counters:</strong> Mewtwo, Togekiss, Machamp, Lucario</div>
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <button class="btn">🕷️ Arlo: «Mis Pokémon te van a encantar… para siempre»</button>
+            <div class="panel">
+              <table>
+                <tr><th>Puesto</th><th>Pokémon</th></tr>
+                <tr><td>1º</td><td>Charmander</td></tr>
+                <tr><td>2º</td><td>Salamence / Dragonite / Gardevoir</td></tr>
+                <tr><td>3º</td><td>Scizor / Steelix / Charizard</td></tr>
+              </table>
+              <div class="counter"><strong>Counters:</strong> Kyogre, Dialga, Mamoswine, Reshiram, Moltres</div>
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <button class="btn">🌑 Sierra: «¡Prepárate para ser aplastado!»</button>
+            <div class="panel">
+              <table>
+                <tr><th>Puesto</th><th>Pokémon</th></tr>
+                <tr><td>1º</td><td>Carvanha</td></tr>
+                <tr><td>2º</td><td>Flygon / Sharpedo / Houndoom</td></tr>
+                <tr><td>3º</td><td>Alakazam / Shiftry / Nidoqueen</td></tr>
+              </table>
+              <div class="counter"><strong>Counters:</strong> Raikou, Sceptile, Mamoswine, Tyranitar, Gengar</div>
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <button class="btn">🎩 Giovanni: «¡Aquí termina tu camino!»</button>
+            <div class="panel">
+              <table>
+                <tr><th>Puesto</th><th>Pokémon</th></tr>
+                <tr><td>1º</td><td>Persian</td></tr>
+                <tr><td>2º</td><td>Kingler / Nidoking / Garchomp</td></tr>
+                <tr><td>3º</td><td>Shadow Mewtwo</td></tr>
+              </table>
+              <div class="counter"><strong>Counters:</strong> Machamp, Lucario, Zapdos, Tyranitar, Gengar, Darkrai</div>
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <button class="btn">✅ Consejos rápidos para líderes</button>
+            <div class="panel">
+              <ul style="margin:.5rem;font-size:.8rem">
+                <li>Nivel 40+ y segundos ataques desbloqueados.</li>
+                <li>Guarda el 1er cargado para forzar sus 2 escudos.</li>
+                <li>Si fallas, cerrá la app antes del KO → no gastas Radar.</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+
+        <script>
+          document.querySelectorAll('.btn').forEach(b=>{
+            b.addEventListener('click',()=>{
+              b.classList.toggle('active');
+              let p=b.nextElementSibling;
+              p.style.maxHeight=p.style.maxHeight?null:p.scrollHeight+'px';
+            });
+          });
+        </script>
+    </main>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
