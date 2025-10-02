@@ -348,3 +348,76 @@ body {
 #globalSuggestions div:hover {
     background-color: var(--secondary-color);
 }
+
+/* --- Prompt Section Styles --- */
+.prompt-section {
+    margin-top: 3rem;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.prompt-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.suggestions-box {
+    position: absolute;
+    width: 100%;
+    border: 1px solid var(--secondary-color);
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 100;
+    background-color: var(--bg-color);
+    border-radius: 0 0 8px 8px;
+    display: none;
+}
+
+.suggestions-box div {
+    padding: 10px 15px;
+    cursor: pointer;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.suggestions-box div:hover {
+    background-color: var(--secondary-color);
+}
+
+.suggestions-box div:last-child {
+    border-bottom: none;
+}
+
+.generated-text-container {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: var(--bg-color);
+    border-radius: 8px;
+    border: 1px solid var(--secondary-color);
+}
+
+.generated-text {
+    background-color: var(--primary-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--secondary-color);
+    margin: 1rem 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    color: var(--text-color);
+}
+
+#copy-text-btn {
+    margin-top: 1rem;
+    background-color: #4CAF50;
+}
+
+#copy-text-btn:hover {
+    background-color: #45a049;
+}

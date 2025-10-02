@@ -33,11 +33,13 @@
         <a href="pages/reclutas.html" class="nav-item">Reclutas</a>
         <a href="pages/lideres.html" class="nav-item">Líderes</a>
         <a href="pages/galeria.html" class="nav-item">Galería</a>
+        <a href="#" class="nav-item" id="prompt-menu-item">Prompt</a>
     </nav>
 
     <main class="content" id="content">
-        <h2>Índice de Contenidos</h2>
-        <div class="region-grid">
+        <div id="index-section">
+            <h2>Índice de Contenidos</h2>
+            <div class="region-grid">
             <a href="pages/pokemon-go-regiones.html" class="region-card">
                 <h3>Pokémon por regiones</h3>
             </a>
@@ -77,10 +79,32 @@
             <a href="pages/lideres.html" class="region-card">
                 <h3>Líderes</h3>
             </a>
+            </div>
+        </div>
+
+        <!-- Prompt Section (Initially Hidden) -->
+        <div id="prompt-section" class="prompt-section" style="display: none;">
+            <h2>Generador de Prompt para Pokémon GO PvP</h2>
+            <div class="prompt-container">
+                <div class="form-group">
+                    <label for="pokemon-search-input">Pokémon a buscar:</label>
+                    <div class="search-container">
+                        <input type="text" id="pokemon-search-input" placeholder="Escribe el nombre del Pokémon...">
+                        <div id="pokemon-suggestions" class="suggestions-box"></div>
+                    </div>
+                </div>
+                <button id="apply-prompt-btn" class="cta-button">Aplicar</button>
+                <div id="generated-text-container" class="generated-text-container" style="display: none;">
+                    <h3>Texto generado:</h3>
+                    <div id="generated-text" class="generated-text"></div>
+                    <button id="copy-text-btn" class="cta-button">Copiar Texto</button>
+                </div>
+            </div>
         </div>
     </main>
 
     <script src="js/main.js"></script>
     <script src="js/search.js"></script>
+    <script src="js/prompt.js"></script>
 </body>
 </html>
